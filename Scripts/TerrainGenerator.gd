@@ -18,19 +18,19 @@ func _ready():
 	for x in width:
 		for y in width:
 
-			var height1 = noise.get_noise_2d(x, y) * height
-			var height2 = noise.get_noise_2d(x + 1, y) * height
-			var height3 = noise.get_noise_2d(x, y + 1) * height
-			var height4 = noise.get_noise_2d(x + 1, y + 1) * height
+			var height1 = get_noise(x, y)
+			var height2 = get_noise(x + 1, y)
+			var height3 = get_noise(x, y + 1)
+			var height4 = get_noise(x + 1, y + 1)
 
-			st.set_color(Color(height1 / height, 0.0, 0.0, 1.0))
-			st.add_vertex(Vector3(x, height1, y))
-			st.set_color(Color(height2 / height, 0.0, 0.0, 1.0))
-			st.add_vertex(Vector3(x + 1, height2, y))
-			st.set_color(Color(height3 / height, 0.0, 0.0, 1.0))
-			st.add_vertex(Vector3(x, height3, y + 1))
-			st.set_color(Color(height4 / height, 0.0, 0.0, 1.0))
-			st.add_vertex(Vector3(x + 1, height4, y + 1))
+			st.set_color(height.get_color())
+			st.add_vertex(Vector3(x, height1.get_height(), y))
+			st.set_color(height2.get_color())
+			st.add_vertex(Vector3(x + 1, height2.get_height(), y))
+			st.set_color(height3.get_color())
+			st.add_vertex(Vector3(x, height3.get_height(), y + 1))
+			st.set_color(height4.get_color())
+			st.add_vertex(Vector3(x + 1, height4.get_height(), y + 1))
 
 			st.add_index(index)
 			st.add_index(index + 1)
@@ -63,4 +63,6 @@ func _ready():
 	static_body_3d.add_child(concave_collision_shape)
 
 func get_noise(x, y):
-	return noise.get_noise_2d(x, y) * noise.get_noise_2d(x / 100, y / 100)
+
+	var terrain_point = TerrainPoint.new(noise.get_noise_2d(x, y) * noise.get_noise_2d(x / 100, y / 100), Color(0, 1, 0, 1), 0)
+	return terrain_point

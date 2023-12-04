@@ -1,2 +1,8 @@
 # snow-game
-Get from canop A to canopy B. You have a car, the car is old so it need to be fixed every once and a while to do so you need to leave the car and maybe get something from the woods, and all you have to guide you is a flashlight and map. Volumetric fog. Its snowing
+You are at home, and your power goes out during a snow storm. There is a downed power line.
+
+So you have to go to the generator turn it off and fix the power line then turn the generator back on.
+
+You have to do this before it gets too cold.
+
+You can't use the car its frozen.

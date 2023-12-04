@@ -9,7 +9,7 @@ class_name Player
 @export var move_speed: float = 10
 @export var sprint_speed: float = 20
 @export var jump_power: float = 10
-@export var gravity: float = 9.8 * 2
+@export var gravity: float = 9.8 * 4
 
 var view_direction: Vector3 = Vector3(0, 0, 1)
 

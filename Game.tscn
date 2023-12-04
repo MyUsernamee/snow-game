@@ -1,3 +1,31 @@
-[gd_scene format=3 uid="uid://brm7vfwb86mpv"]
+[gd_scene load_steps=8 format=3 uid="uid://brm7vfwb86mpv"]
+
+[ext_resource type="Script" path="res://Game.gd" id="1_60fab"]
+[ext_resource type="PackedScene" uid="uid://baa4mr215itg8" path="res://addons/kenney_prototype_tools/scenes/dark/dark_06.tscn" id="1_ejthg"]
+[ext_resource type="PackedScene" uid="uid://cxs86aw3wi158" path="res://PackedScenes/player_controller.tscn" id="2_31hkk"]
+[ext_resource type="PackedScene" uid="uid://bthxgpwyt1tsg" path="res://simple_box.tscn" id="2_hsy6j"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fgfsy"]
+
+[sub_resource type="Sky" id="Sky_2idoq"]
+sky_material = SubResource("ProceduralSkyMaterial_fgfsy")
+
+[sub_resource type="Environment" id="Environment_7etbb"]
+background_mode = 2
+sky = SubResource("Sky_2idoq")
 
 [node name="Root" type="Node3D"]
+script = ExtResource("1_60fab")
+
+[node name="Cube" parent="." instance=ExtResource("1_ejthg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0120795, 2.10001, -3.91345)
+
+[node name="SimpleBox" parent="." instance=ExtResource("2_hsy6j")]
+transform = Transform3D(55.9515, 0, 0, 0, 1, 0, 0, 0, 51.9956, 0.544335, -0.0549788, 1.58526)
+
+[node name="PlayerController" parent="." instance=ExtResource("2_31hkk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.404134, 7.67081, 0.441751)
+mouse_sensitivity = null
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7etbb")

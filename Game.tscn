@@ -29,3 +29,6 @@ mouse_sensitivity = null
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_7etbb")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.212329, 0.933877, -0.287732, -0.180757, 0.326899, 0.927612, 0.960335, -0.14495, 0.238215, 0, 5.20045, 0)

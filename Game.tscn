@@ -1,39 +1,62 @@
-[gd_scene load_steps=9 format=3 uid="uid://brm7vfwb86mpv"]
+[gd_scene load_steps=10 format=3 uid="uid://brm7vfwb86mpv"]
 
 [ext_resource type="Script" path="res://Game.gd" id="1_60fab"]
-[ext_resource type="PackedScene" uid="uid://baa4mr215itg8" path="res://addons/kenney_prototype_tools/scenes/dark/dark_06.tscn" id="1_ejthg"]
-[ext_resource type="PackedScene" uid="uid://cxs86aw3wi158" path="res://PackedScenes/player_controller.tscn" id="2_31hkk"]
-[ext_resource type="PackedScene" uid="uid://bthxgpwyt1tsg" path="res://simple_box.tscn" id="2_hsy6j"]
+[ext_resource type="Shader" path="res://Psx.gdshader" id="2_v7sid"]
+[ext_resource type="PackedScene" uid="uid://bamfkwgt1his7" path="res://Player.tscn" id="3_srvc4"]
 [ext_resource type="Script" path="res://Scripts/TerrainGenerator.gd" id="5_do7c8"]
+[ext_resource type="PackedScene" uid="uid://dr62yq5rgj35t" path="res://PackedScenes/monster.tscn" id="5_vnlkh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_npvmr"]
+shader = ExtResource("2_v7sid")
+shader_parameter/enabled = true
+shader_parameter/dithering = true
+shader_parameter/colors = 12
+shader_parameter/dither_size = 2
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fgfsy"]
 
-[sub_resource type="Sky" id="Sky_2idoq"]
+[sub_resource type="Sky" id="Sky_qa2l5"]
 sky_material = SubResource("ProceduralSkyMaterial_fgfsy")
 
 [sub_resource type="Environment" id="Environment_7etbb"]
-background_mode = 2
-sky = SubResource("Sky_2idoq")
+background_mode = 1
+background_color = Color(1, 1, 1, 1)
+background_energy_multiplier = 0.0
+sky = SubResource("Sky_qa2l5")
+fog_density = 0.0837
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0737
 
 [node name="Root" type="Node3D"]
 script = ExtResource("1_60fab")
 
-[node name="Cube" parent="." instance=ExtResource("1_ejthg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0120795, 2.10001, -3.91345)
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+material = SubResource("ShaderMaterial_npvmr")
+clip_contents = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 4.0
+offset_bottom = 17.0
+stretch = true
 
-[node name="SimpleBox" parent="." instance=ExtResource("2_hsy6j")]
-transform = Transform3D(55.9515, 0, 0, 0, 1, 0, 0, 0, 51.9956, 0.544335, -0.0549788, 1.58526)
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1156, 665)
+render_target_update_mode = 4
 
-[node name="PlayerController" parent="." instance=ExtResource("2_31hkk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.404134, 440.208, 0.441751)
-mouse_sensitivity = null
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
 environment = SubResource("Environment_7etbb")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.212329, 0.933877, -0.287732, -0.180757, 0.326899, 0.927612, 0.960335, -0.14495, 0.238215, 0, 5.20045, 0)
-
-[node name="TerrainGenerator" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -512, 0, -512)
+[node name="TerrainGenerator" type="Node3D" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("5_do7c8")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(-0.712467, -0.471181, -0.519981, -0.216007, -0.557772, 0.801393, -0.667632, 0.683286, 0.295616, 0, 0, 0)
+light_energy = 0.192
+
+[node name="Player" parent="SubViewportContainer/SubViewport" instance=ExtResource("3_srvc4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43613, 5.5608, 0.424612)
+
+[node name="Root Scene" parent="." instance=ExtResource("5_vnlkh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.87066, 3.55896, 0.71055)

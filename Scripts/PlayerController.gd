@@ -11,28 +11,46 @@ class_name Player
 @export var jump_power: float = 10
 @export var gravity: float = 9.8 * 4
 
-var sprint_meter: float = 0 # TODO: Implement sprint meter
+var noclip: bool = false
+
 var cold_meter: float = 0 # TODO: Implement cold meter
 
 var view_direction: Vector3 = Vector3(0, 0, 1)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Panku.gd_exprenv.register_env("player", self)
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+
+	if noclip:
+		var movement = Vector3.ZERO
+		movement.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
+		movement.z = -Input.get_action_strength("move_forward") + Input.get_action_strength("move_back")
+		movement.y = 0
+
+		movement = movement.normalized() * move_speed * 10.0
+
+		character_body.velocity = camera.global_transform.basis.x * movement.x * delta
+		character_body.velocity = camera.global_transform.basis.y * movement.y * delta
+		character_body.velocity = camera.global_transform.basis.z * movement.z * delta
+
+		character_body.move_and_slide()
+
+		return
+
 	view_direction = -camera.global_transform.basis.z
 
 	var movement = Vector3.ZERO
 	movement.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	movement.z = Input.get_action_strength("move_forward") - Input.get_action_strength("move_back")
 
-	var local_move_speed = move_speed
-
+	var local_move_speed = sprint_speed
 	if Input.is_action_pressed("sprint"):
-		local_move_speed = sprint_speed
+		local_move_speed = move_speed
 
 	movement = movement.normalized() * local_move_speed
 

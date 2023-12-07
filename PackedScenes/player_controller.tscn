@@ -1,8 +1,32 @@
-[gd_scene load_steps=3 format=3 uid="uid://cxs86aw3wi158"]
+[gd_scene load_steps=8 format=3 uid="uid://cxs86aw3wi158"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_4r45d"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rg25e"]
+
+[sub_resource type="Curve" id="Curve_sah2c"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_3wo6i"]
+curve = SubResource("Curve_sah2c")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ceurd"]
+emission_shape = 3
+emission_box_extents = Vector3(32, 1, 32)
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 3.2
+initial_velocity_max = 3.2
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_3wo6i")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mk681"]
+shading_mode = 0
+
+[sub_resource type="SphereMesh" id="SphereMesh_bmi3r"]
+material = SubResource("StandardMaterial3D_mk681")
+radius = 0.05
+height = 0.1
 
 [node name="PlayerController" type="Node3D"]
 script = ExtResource("1_4r45d")
@@ -18,3 +42,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.75, 0)
 shape = SubResource("CapsuleShape3D_rg25e")
 
 [node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0941, 13.4297, -1.53503)
+amount = 128
+lifetime = 8.0
+preprocess = 600.0
+visibility_aabb = AABB(-16, -16, -16, 32, 32, 32)
+process_material = SubResource("ParticleProcessMaterial_ceurd")
+draw_pass_1 = SubResource("SphereMesh_bmi3r")

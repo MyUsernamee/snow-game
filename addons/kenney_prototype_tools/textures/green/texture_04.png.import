@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bu6312qas8n7s"
-path.s3tc="res://.godot/imported/texture_04.png-4e68770adbcda439a0601df66f33e685.s3tc.ctex"
+path.s3tc="res://godot/imported/texture_04.png-4e68770adbcda439a0601df66f33e685.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -12,7 +12,7 @@ metadata={
 [deps]
 
 source_file="res://addons/kenney_prototype_tools/textures/green/texture_04.png"
-dest_files=["res://.godot/imported/texture_04.png-4e68770adbcda439a0601df66f33e685.s3tc.ctex"]
+dest_files=["res://godot/imported/texture_04.png-4e68770adbcda439a0601df66f33e685.s3tc.ctex"]
 
 [params]
 

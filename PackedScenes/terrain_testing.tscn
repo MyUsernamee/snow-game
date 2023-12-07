@@ -1,11 +1,28 @@
-[gd_scene load_steps=2 format=3 uid="uid://b3q7mrepoynj3"]
+[gd_scene load_steps=6 format=3 uid="uid://b3q7mrepoynj3"]
 
+[ext_resource type="Script" path="res://PackedScenes/Spin.gd" id="1_2ftq5"]
 [ext_resource type="Script" path="res://Scripts/TerrainGenerator.gd" id="1_ehoic"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_uid27"]
+
+[sub_resource type="Sky" id="Sky_5r6xw"]
+sky_material = SubResource("ProceduralSkyMaterial_uid27")
+
+[sub_resource type="Environment" id="Environment_hni2y"]
+background_mode = 2
+sky = SubResource("Sky_5r6xw")
+
 [node name="Node3D" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.854368, 0, -0.519668, 0, 1, 0, 0.519668, 0, -0.854368, -2.90075, 5.80177, -2.55789)
+script = ExtResource("1_2ftq5")
 
 [node name="TerrainGenerator" type="Node3D" parent="."]
 script = ExtResource("1_ehoic")
 
-[node name="Camera3D" type="Camera3D" parent="TerrainGenerator"]
-transform = Transform3D(-0.854368, 0, -0.519668, 0, 1, 0, 0.519668, 0, -0.854368, -2.90075, 5.80177, -2.55789)
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_hni2y")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.889688, -0.430201, 0.152915, 0.08731, 0.48905, 0.867875, -0.448144, -0.758786, 0.472663, 0, 0, 0)

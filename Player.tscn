@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://bamfkwgt1his7"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_lurvy"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2blf5"]
+radius = 0.3
+height = 1.5
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rr6ap"]
+radius = 0.3
+height = 1.0
+
+[node name="Player" type="Node3D"]
+script = ExtResource("1_lurvy")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+collision_layer = 2
+collision_mask = 3
+wall_min_slide_angle = 0.0
+floor_constant_speed = true
+floor_snap_length = 1.0
+
+[node name="StandingCollision" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("CapsuleShape3D_2blf5")
+
+[node name="CrouchingCollision" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("CapsuleShape3D_rr6ap")
+disabled = true
+
+[node name="Head" type="Node3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/Head"]
+fov = 100.0

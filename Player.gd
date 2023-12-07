@@ -112,9 +112,7 @@ func _physics_process(delta):
 			bob_t = 0
 			distance = 0
 			bob *= 0.9
-
-		print(distance / PI)
-
+			
 		if distance > PI * 3.0 / 8.0:
 			distance = 0
 			var step = step_sounds[randi() % step_sounds.size()]

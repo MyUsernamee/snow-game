@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://brm7vfwb86mpv"]
+[gd_scene load_steps=9 format=3 uid="uid://brm7vfwb86mpv"]
 
 [ext_resource type="Script" path="res://Game.gd" id="1_60fab"]
 [ext_resource type="Shader" path="res://Psx.gdshader" id="2_v7sid"]
 [ext_resource type="PackedScene" uid="uid://bamfkwgt1his7" path="res://Player.tscn" id="3_srvc4"]
 [ext_resource type="Script" path="res://Scripts/TerrainGenerator.gd" id="5_do7c8"]
-[ext_resource type="PackedScene" uid="uid://dr62yq5rgj35t" path="res://PackedScenes/monster.tscn" id="5_vnlkh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_npvmr"]
 shader = ExtResource("2_v7sid")
@@ -57,6 +56,3 @@ light_energy = 0.192
 
 [node name="Player" parent="SubViewportContainer/SubViewport" instance=ExtResource("3_srvc4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43613, 5.5608, 0.424612)
-
-[node name="Root Scene" parent="." instance=ExtResource("5_vnlkh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.87066, 3.55896, 0.71055)

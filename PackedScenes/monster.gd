@@ -1,11 +1,19 @@
 extends Node3D
 
-@onready var player = $SubViewportContainer/SubViewport/Player
+@onready var player = $/root/Root.player
+
+enum State {
+
+	HIDDEN,
+	WATCHING,
+	APPROACHING,
+	RUNNING
+
+}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# We lock the mouse
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

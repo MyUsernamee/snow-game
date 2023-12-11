@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3q7mrepoynj3"]
+[gd_scene load_steps=7 format=3 uid="uid://b3q7mrepoynj3"]
 
 [ext_resource type="Script" path="res://PackedScenes/Spin.gd" id="1_2ftq5"]
 [ext_resource type="Script" path="res://Scripts/TerrainGenerator.gd" id="1_ehoic"]
+[ext_resource type="PackedScene" uid="uid://yvi3kca7gouk" path="res://Models/Tree.obj" id="3_yxim4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_uid27"]
 
@@ -20,6 +21,9 @@ script = ExtResource("1_2ftq5")
 
 [node name="TerrainGenerator" type="Node3D" parent="."]
 script = ExtResource("1_ehoic")
+width = 256
+scale_ = 1.0
+tree_model = ExtResource("3_yxim4")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_hni2y")

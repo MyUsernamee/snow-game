@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://brm7vfwb86mpv"]
+[gd_scene load_steps=11 format=3 uid="uid://brm7vfwb86mpv"]
 
 [ext_resource type="Script" path="res://Game.gd" id="1_60fab"]
 [ext_resource type="Shader" path="res://Psx.gdshader" id="2_v7sid"]
 [ext_resource type="PackedScene" uid="uid://bamfkwgt1his7" path="res://Player.tscn" id="3_srvc4"]
+[ext_resource type="PackedScene" uid="uid://cs8kvdkcs4mlb" path="res://PackedScenes/tree.tscn" id="4_d54hh"]
 [ext_resource type="Script" path="res://Scripts/TerrainGenerator.gd" id="5_do7c8"]
+[ext_resource type="PackedScene" uid="uid://v0415giylbt7" path="res://PackedScenes/monster.tscn" id="6_dqt2u"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_npvmr"]
 shader = ExtResource("2_v7sid")
@@ -44,15 +46,21 @@ handle_input_locally = false
 size = Vector2i(1156, 665)
 render_target_update_mode = 4
 
+[node name="Root Scene" parent="SubViewportContainer/SubViewport" instance=ExtResource("6_dqt2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
 environment = SubResource("Environment_7etbb")
 
 [node name="TerrainGenerator" type="Node3D" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("5_do7c8")
+width = 256
+scale_ = 1.0
+tree_model = ExtResource("4_d54hh")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(-0.712467, -0.471181, -0.519981, -0.216007, -0.557772, 0.801393, -0.667632, 0.683286, 0.295616, 0, 0, 0)
 light_energy = 0.192
 
 [node name="Player" parent="SubViewportContainer/SubViewport" instance=ExtResource("3_srvc4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43613, 5.5608, 0.424612)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43613, 27.3214, 0.424612)

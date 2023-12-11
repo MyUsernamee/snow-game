@@ -11,7 +11,6 @@ class_name TerrainGenerator
 @export var material: Material;
 
 var noise = FastNoiseLite.new()
-var path = Path.new(Vector3(0, 0, 0))
 
 func _ready():
 
@@ -49,7 +48,7 @@ func _ready():
 			st.add_index(index + 3)
 			st.add_index(index + 2)
 
-			if randf() > 0.99:
+			if randf() > noise.get_noise_2d(x / scale_ / 2.0, y / scale_ / 2.0) * 0.2 + 0.9:
 				var tree = tree_model.instantiate()
 				tree.position = Vector3(x - width / 2.0, height1.get_height(), y - width / 2.0)
 				tree.rotation = Vector3(0, randf() * 360, 0)
@@ -71,7 +70,7 @@ func _ready():
 
 	var mesh_instance = MeshInstance3D.new()
 	mesh_instance.mesh = mesh
-	#material = StandardMaterial3D.new() if material == null else material
+	material = StandardMaterial3D.new() if material == null else material
 	mesh_instance.material_override = material
 	static_body_3d.add_child(mesh_instance)
 
@@ -83,15 +82,21 @@ func _ready():
 
 func get_noise_point(x, y):
 
-	var mountain = noise.get_noise_2d(x / scale_, y / scale_) * height
-	#mountain = max(mountain, 0.5) # 25% of area is mountatins
+	var distance_to_edge = min(x, y, width - x, width - y)
 
-	# math.max((noise2d(x / 100, y / 100) * 15) ^ 3, 1)
-	var valley = noise.get_noise_2d(x / scale_ * 4.0, y / scale_ * 4.0) * height / 10.0
-	valley = max(pow(valley, 3), 1)
+	var edge_mountains = s(distance_to_edge / (width / 2.0) * 2.0) # How much mountain 0-1
 
+	var mountains = noise.get_noise_2d(x / scale_, y / scale_) * height * 0.5 + 0.5
+	var valley = noise.get_noise_2d(x / scale_ / 8.0, y / scale_ / 8.0) * 6.0
 
-	var height_ = mountain / valley
+	var height_ = edge_mountains * mountains + valley
 
 	var terrain_point = TerrainPoint.new(height_, Color(1, 1, 1, 1), 0)
 	return terrain_point
+
+func s(x):
+	if x < 0 or x > 1:
+		return 0
+	else:
+		return (cos(PI * x * 2 + PI) / 2) + 0.5
+	

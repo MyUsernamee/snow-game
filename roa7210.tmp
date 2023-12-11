@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://c58yh2gyfhy8h"]
+
+[ext_resource type="Script" path="res://Scripts/Path.gd" id="1_f7qrc"]
+[ext_resource type="Script" path="res://PackedScenes/Spin.gd" id="2_7ue11"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qeegw"]
+
+[sub_resource type="Sky" id="Sky_u6geg"]
+sky_material = SubResource("ProceduralSkyMaterial_qeegw")
+
+[sub_resource type="Environment" id="Environment_dbrjw"]
+background_mode = 2
+sky = SubResource("Sky_u6geg")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="RoadGenerator" type="Node3D" parent="."]
+script = ExtResource("1_f7qrc")
+
+[node name="RayCast3D" type="RayCast3D" parent="RoadGenerator"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+environment = SubResource("Environment_dbrjw")
+script = ExtResource("2_7ue11")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.9729, -1.68511, 81.1114)
+size = Vector3(1010.17, 1, 661.557)

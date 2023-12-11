@@ -10,6 +10,6 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	time += delta
-	position = Vector3(cos(time), 1.0, sin(time)) * 1024
+	position = Vector3(cos(time), 1.0, sin(time)) * 50.0
 	look_at(Vector3(0, 0, 0), Vector3(0, 1, 0))
 	pass

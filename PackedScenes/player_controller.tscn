@@ -30,10 +30,6 @@ height = 0.1
 
 [node name="PlayerController" type="Node3D"]
 script = ExtResource("1_4r45d")
-move_speed = null
-sprint_speed = null
-jump_power = null
-gravity = null
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
 

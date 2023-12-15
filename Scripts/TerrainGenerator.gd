@@ -48,7 +48,7 @@ func _ready():
 			st.add_index(index + 3)
 			st.add_index(index + 2)
 
-			if randf() > noise.get_noise_2d(x / scale_ / 2.0, y / scale_ / 2.0) * 0.2 + 0.9:
+			if randf() > 0.99:
 				var tree = tree_model.instantiate()
 				tree.position = Vector3(x - width / 2.0, height1.get_height(), y - width / 2.0)
 				tree.rotation = Vector3(0, randf() * 360, 0)

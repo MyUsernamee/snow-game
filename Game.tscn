@@ -46,11 +46,11 @@ handle_input_locally = false
 size = Vector2i(1156, 665)
 render_target_update_mode = 4
 
-[node name="Root Scene" parent="SubViewportContainer/SubViewport" instance=ExtResource("6_dqt2u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
 environment = SubResource("Environment_7etbb")
+
+[node name="Monster" parent="SubViewportContainer/SubViewport" instance=ExtResource("6_dqt2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.9341, -11.8341)
 
 [node name="TerrainGenerator" type="Node3D" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("5_do7c8")

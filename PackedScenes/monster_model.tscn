@@ -1,0 +1,96 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2sk210g7w2hj"]
+
+[ext_resource type="PackedScene" uid="uid://c4gsdthmj4rod" path="res://Models/Monster.glb" id="1_2p2ib"]
+[ext_resource type="Script" path="res://PackedScenes/ik_editor.gd" id="2_jft8t"]
+
+[node name="MonsterModel" instance=ExtResource("1_2p2ib")]
+
+[node name="Armature" parent="." index="0"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+show_rest_only = true
+bones/0/enabled = false
+bones/1/rotation = Quaternion(0.835908, 0.37036, 0.370359, -0.164092)
+bones/2/enabled = false
+bones/2/rotation = Quaternion(-0.172368, -0.374012, 0.366671, 0.83424)
+bones/2/scale = Vector3(1, 1, 1)
+bones/3/enabled = false
+bones/3/rotation = Quaternion(0.0194729, 9.05315e-08, -1.71878e-09, 0.99981)
+bones/4/rotation = Quaternion(-0.00956391, -1.14163e-09, -1.09195e-11, 0.999954)
+bones/6/rotation = Quaternion(0.5, 0.5, 0.5, -0.5)
+bones/7/rotation = Quaternion(-1.81068e-10, -1.85747e-08, 0.00810664, 0.999967)
+bones/8/rotation = Quaternion(5.91277e-11, -2.58904e-13, -0.0157242, 0.999876)
+bones/13/rotation = Quaternion(0.5, -0.5, -0.5, -0.5)
+bones/14/rotation = Quaternion(-1.65826e-10, 2.04549e-08, -0.00810664, 0.999967)
+bones/15/enabled = false
+bones/15/rotation = Quaternion(-8.45274e-10, 5.37496e-08, 0.0157242, 0.999876)
+bones/16/enabled = false
+bones/16/rotation = Quaternion(0.835908, -0.37036, -0.370359, -0.164092)
+bones/17/rotation = Quaternion(-0.172368, 0.374012, -0.366671, 0.83424)
+bones/17/scale = Vector3(1, 1, 1)
+bones/18/rotation = Quaternion(0.0194729, -9.05315e-08, 1.71878e-09, 0.99981)
+bones/19/rotation = Quaternion(-0.00956391, 1.14163e-09, 1.09195e-11, 0.999954)
+bones/20/rotation = Quaternion(0.00990992, 2.98009e-08, 2.06737e-09, 0.999951)
+bones/21/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
+bones/22/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
+bones/23/rotation = Quaternion(0, 0.707107, 0.707107, 0)
+bones/24/rotation = Quaternion(0, 0.707107, 0.707107, 0)
+bones/25/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
+bones/26/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
+bones/27/rotation = Quaternion(0.707107, -5.33851e-08, -5.33851e-08, 0.707107)
+bones/28/rotation = Quaternion(0.707107, -5.33851e-08, -5.33851e-08, 0.707107)
+bones/29/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
+
+[node name="Icosphere" parent="Armature/Skeleton3D" index="0"]
+transform = Transform3D(0.995462, -0.0592156, -0.0744375, 0.0592155, -0.226622, 0.972178, -0.0744374, -0.972178, -0.222088, 0.0497978, 1.13776, 0.81756)
+
+[node name="LeftLeg" type="SkeletonIK3D" parent="Armature/Skeleton3D" index="2"]
+process_priority = 1
+root_bone = &"LeftFemur"
+tip_bone = &"LeftCalf.001"
+use_magnet = true
+magnet = Vector3(0.3, 0, 1)
+target_node = NodePath("../../LeftLegMarker")
+script = ExtResource("2_jft8t")
+
+[node name="HeadIK" type="SkeletonIK3D" parent="Armature/Skeleton3D" index="3"]
+process_priority = 1
+root_bone = &"UpperSpine"
+tip_bone = &"Bone.003"
+target_node = NodePath("../../LookTarget")
+script = ExtResource("2_jft8t")
+
+[node name="RightLeg" type="SkeletonIK3D" parent="Armature/Skeleton3D" index="4"]
+process_priority = 1
+root_bone = &"RightFemur"
+tip_bone = &"RightCalf.001"
+use_magnet = true
+magnet = Vector3(-0.3, 0, 1)
+target_node = NodePath("../../RightLegMarker")
+script = ExtResource("2_jft8t")
+
+[node name="RightLegMarker" type="Marker3D" parent="Armature" index="1"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.5, -3.4, 0)
+top_level = true
+
+[node name="LeftLegMarker" type="Marker3D" parent="Armature" index="2"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.5, -3.4, 0)
+top_level = true
+
+[node name="LookTarget" type="Marker3D" parent="Armature" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0531231, 1.69105, -0.872154)
+top_level = true
+
+[node name="RightLegRest" type="Marker3D" parent="Armature" index="4"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.25, -1.7, 0)
+
+[node name="LeftLegRest" type="Marker3D" parent="Armature" index="5"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.25, -1.7, 0)
+
+[node name="HeadRoot" type="Marker3D" parent="Armature" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.979975, 0)
+
+[node name="AnimationPlayer" parent="." index="1"]
+active = false
+reset_on_save = false

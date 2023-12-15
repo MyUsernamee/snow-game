@@ -18,6 +18,7 @@ extends Node3D
 @onready var head_root = $CharacterBody3D/MonsterModel/Armature/HeadRoot
 @onready var head_target = $CharacterBody3D/MonsterModel/Armature/LookTarget
 @onready var visible_notifier = $CharacterBody3D/VisibleOnScreenNotifier3D
+@export var anger_sound: AudioStream = load("res://Sounds/SCREAM.mp3")
 
 var scenes: Array[PackedScene];
 
@@ -28,7 +29,8 @@ enum State {
 	HIDDEN,
 	WATCHING,
 	APPROACHING,
-	RUNNING
+	RUNNING,
+	ANGER
 
 }
 
@@ -86,30 +88,8 @@ func update(delta):
 		State.HIDDEN:
 			visible = false
 
-			if randf_range(0, 1) < 0.01:
-				print("Monster spawned")
-				current_state = State.WATCHING
-				visible = true
-				look_target = player.global_transform.origin
-				animation_t = 0.0
-
-				# We spawn the monster just outside of the fog behind the player
-				var spawn_angle = randf_range(0, PI)
-				var spawn_direction = Vector3(cos(spawn_angle), 0, sin(spawn_angle))
-				var spawn_distance = 30.0
-				move_target = player.global_transform.origin + spawn_direction * spawn_distance * player_camera.global_transform
-				
-				var new_hit = raycast(move_target + Vector3.UP * 100.0, move_target - Vector3.UP * 100.0)
-
-				if new_hit.collider != null:
-					move_target = new_hit.position
-					body.global_position = move_target + Vector3.UP * 4.0
-					print("Monster spawned on top of something")
-					print(new_hit.collider.name)
-					print(new_hit.position)
-				else:
-					move_target = player.global_transform.origin + spawn_direction * spawn_distance * player_camera.global_transform
-
+			if randf() < 0.01:
+				spawn_monster()
 			
 		State.WATCHING:
 			
@@ -119,11 +99,16 @@ func update(delta):
 			if not visible_notifier.is_on_screen():
 				timer += delta
 			else:
-				timer = 0.0
+				timer -= delta
+
+			if timer < -10.0:
+				current_state = State.ANGER
+				Audio.play_sound(anger_sound)
 
 			if timer > 3.0:
 				current_state = State.APPROACHING
 				animation_t = 0.0
+				timer = 0.0
 				look_target = player.global_transform.origin
 
 		State.APPROACHING:
@@ -131,20 +116,37 @@ func update(delta):
 			move_target = player.global_transform.origin
 
 			if visible_notifier.is_on_screen():
-				current_state = State.WATCHING
+				current_state = State.RUNNING
 				animation_t = 0.0
 				look_target = player.global_transform.origin
 			
 
 		State.RUNNING:
-			pass
+			move_target = player.global_transform.origin + (body.global_position - player.global_transform.origin).normalized() * 60.0
+
+			# Once we are far enough away
+			if (body.global_position - player.global_transform.origin).length() > 50.0:
+				# Hide again
+				current_state = State.HIDDEN
+				animation_t = 0.0
+				visible = false
+
+		State.ANGER:
+
+			move_target = player.global_transform.origin
+
+			if body.global_position.distance_to(player.global_transform.origin) < 3.0:
+				get_tree().quit()
 			
 	look_target = player_camera.global_transform.origin
 
 func perform_movement(delta):
 
 	if body.is_on_floor() && move_target.distance_to(body.global_transform.origin) > 3.0:
-		body.velocity = (move_target - body.global_transform.origin).normalized() * 10.0
+		body.velocity = (move_target - body.global_transform.origin).normalized()
+		# We flatten the velocity so that the monster doesn't fly
+		body.velocity.y = 0.0
+		body.velocity = body.velocity.normalized() * 10.0
 		pass
 	else:
 		body.velocity *= 0.9
@@ -159,3 +161,39 @@ func raycast(origin, end):
 
 	var result = space_state.intersect_ray(query)
 	return result
+
+func spawn_monster():
+	
+	print("Spawning monster")
+
+	visible = true
+
+	look_target = player.global_transform.origin
+	animation_t = 0.0
+
+	# We spawn the monster just outside of the fog behind the player
+	var spawn_angle = randf_range(0, PI)
+	var spawn_direction = Vector3(cos(spawn_angle), 0, sin(spawn_angle))
+	var new_position = player.global_transform.origin + spawn_direction * 50.0
+
+	var new_hit = raycast(new_position + Vector3.UP * 100.0, new_position - Vector3.UP * 100.0)
+
+	if new_hit.collider != null:
+		new_position = new_hit.position
+		body.global_position = new_position + Vector3.UP * 4.0
+		print("Monster spawned on top of something")
+		print(new_hit.collider.name)
+		print(new_hit.position)
+	else:
+		new_position = player.global_transform.origin + spawn_direction * 50.0
+		body.global_position = new_position + Vector3.UP * 4.0
+
+	print(visible_notifier.is_on_screen())
+
+	if visible_notifier.is_on_screen():
+		spawn_monster()
+	else:
+		current_state = State.WATCHING
+		visible = true
+
+	

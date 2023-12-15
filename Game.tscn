@@ -54,7 +54,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.9341, -11.8341)
 
 [node name="TerrainGenerator" type="Node3D" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("5_do7c8")
-width = 256
 scale_ = 1.0
 tree_model = ExtResource("4_d54hh")
 

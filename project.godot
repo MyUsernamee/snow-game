@@ -17,12 +17,11 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Panku="*res://addons/panku_console/console.tscn"
 Audio="*res://addons/quick_audio/./Audio.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/panku_console/plugin.cfg", "res://addons/quick_audio/plugin.cfg")
+enabled=PackedStringArray("res://addons/quick_audio/plugin.cfg")
 
 [input]
 
